@@ -1,4 +1,12 @@
-/* Estilo para a tela de login */
+/* Estilo para o body e container */
+html, body {
+    height: 100%; /* Garante que o corpo ocupe 100% da altura da tela */
+    margin: 0;    /* Remove as margens padrão */
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Organiza os elementos de cima para baixo */
+}
+
 body {
     background-color: #121212;
     color: #ffffff;
@@ -6,17 +14,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
+    flex-grow: 1; /* Faz o body crescer para ocupar o restante do espaço */
 }
 
 .container {
     background-color: #1f1f1f;
     padding: 30px;
+    margin-top: 120px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
     text-align: center;
     width: 350px; /* Definindo largura fixa para desktop */
+    margin-bottom: 20px; /* Espaço entre o conteúdo e o footer */
 }
 
 h2 {
@@ -82,6 +92,36 @@ button:hover {
         font-size: 18px; /* Ajuste no título para dispositivos móveis */
     }
 }
+
+/* Estilo para o footer */
+footer {
+    width: 100%;
+    background-color: #1f1f1f;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    position: relative;
+    margin-top: auto; /* Garante que o footer vá para o fundo da página */
+}
+
+footer a {
+    color: #03dac5; /* Cor do link */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .developer-names {
+    margin-top: 10px;
+}
+
+footer .developer-names span {
+    font-weight: bold;
+}
+
 #loading {
     position: fixed;
     top: 0;

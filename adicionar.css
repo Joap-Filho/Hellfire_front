@@ -1,26 +1,40 @@
-/* Estilo para a tela de adicionar item */
+/* Estilo para o corpo da página */
+html, body {
+    height: 100%; /* Garante que a página ocupe 100% da altura da tela */
+    margin: 0;    /* Remove margens padrão */
+    display: flex;
+    flex-direction: column; /* Organiza os elementos de cima para baixo */
+}
+
 body {
     background-color: #121212;
     color: #ffffff;
     font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    height: 100vh; /* Garante que o conteúdo ocupe toda a altura da tela */
+    margin: 0;
+    flex-grow: 1; /* Faz o body crescer para ocupar o restante do espaço */
 }
 
+/* Container */
 .container {
     width: 100%;
-    max-width: 600px;
+    max-width: 600px; /* Ajusta a largura do container para ser menor em telas grandes */
     padding: 20px;
     background-color: #1f1f1f;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+    margin-bottom: 50px; /* Espaço entre o conteúdo e o footer */
+
 }
 
+/* Título */
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
 input, textarea {
@@ -31,8 +45,10 @@ input, textarea {
     border: 1px solid #555;
     color: #fff;
     border-radius: 5px;
+    box-sizing: border-box; /* Para garantir que o padding não quebre o layout */
 }
 
+/* Ajuste para os botões */
 button {
     width: auto; /* Ajusta a largura para se adaptar ao conteúdo */
     padding: 8px 16px; /* Diminui o tamanho do botão */
@@ -42,7 +58,7 @@ button {
     color: white;
     font-size: 16px;
     cursor: pointer;
-    margin-bottom: 10px; /* Espaçamento entre os botões */
+    margin-right: 10px; /* Espaçamento entre os botões */
 }
 
 button:hover {
@@ -60,6 +76,13 @@ a button:hover {
     background-color: #f44336;
 }
 
+/* Botões alinhados à esquerda */
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* Alinha os botões à esquerda */
+    margin-top: 10px;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .container {
@@ -67,8 +90,56 @@ a button:hover {
     }
 
     input, button {
-        width: 100%;
+        width: 100%; /* Botões e campos de entrada ocupando toda a largura */
     }
+
+    h2 {
+        font-size: 20px; /* Ajuste no título para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 18px; /* Ajuste no título para dispositivos móveis */
+    }
+}
+
+/* Estilo para o footer */
+footer {
+    width: 100%;
+    background-color: #1f1f1f;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    position: relative;
+    margin-top: auto; /* Faz o footer ficar na parte inferior da página */
+}
+
+footer a {
+    color: #03dac5; /* Cor do link */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .developer-names {
+    margin-top: 10px;
+}
+
+footer .developer-names span {
+    font-weight: bold;
 }
 
 #loading {
