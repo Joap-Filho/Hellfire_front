@@ -62,7 +62,6 @@ button:hover {
     background-color: #3700b3;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .container {
         width: 90%;
@@ -70,7 +69,7 @@ button:hover {
     }
 
     input, button {
-        width: 100%;
+        width: 100%; /* Campos e botões ocupam toda a largura */
     }
 
     h2 {
@@ -92,6 +91,7 @@ button:hover {
         font-size: 18px; /* Ajuste no título para dispositivos móveis */
     }
 }
+
 
 /* Estilo para o footer */
 footer {

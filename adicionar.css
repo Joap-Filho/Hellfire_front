@@ -87,6 +87,7 @@ a button:hover {
 @media (max-width: 768px) {
     .container {
         width: 90%;
+        padding: 15px;
     }
 
     input, button {
@@ -112,6 +113,7 @@ a button:hover {
         font-size: 18px; /* Ajuste no título para dispositivos móveis */
     }
 }
+
 
 /* Estilo para o footer */
 footer {
