@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Item</title>
+    <link rel="stylesheet" href="editar.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Editar Item</h2>
+        <input type="hidden" id="item_id">
+        <input type="text" id="categoria"><br>
+        <input type="text" id="nome_item"><br>
+        <input type="text" id="municao"><br>
+        <input type="number" id="quantidade_atual"><br>
+        <input type="number" id="quantidade_minima"><br>
+        <input type="number" id="quantidade_maxima"><br>
+        <input type="text" id="data_atualizacao" disabled><br>
+        <textarea id="observacoes"></textarea><br>
+        <button onclick="saveEdit()">Salvar</button>
+        <a href="estoque.html"><button>Voltar</button></a>
+    </div>
+    <div id="loading" class="loading hidden">Aguardando a resposta da API...</div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

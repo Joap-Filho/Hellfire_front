@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Item</title>
+    <link rel="stylesheet" href="adicionar.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Adicionar Novo Item</h2>
+        <input type="text" id="categoria" placeholder="Categoria"><br>
+        <input type="text" id="nome_item" placeholder="Nome do Item"><br>
+        <input type="text" id="municao" placeholder="Munição"><br>
+        <input type="number" id="quantidade_atual" placeholder="Quantidade Atual"><br>
+        <input type="number" id="quantidade_minima" placeholder="Quantidade Mínima"><br>
+        <input type="number" id="quantidade_maxima" placeholder="Quantidade Máxima"><br>
+        <textarea id="observacoes" placeholder="Observações"></textarea><br>
+        <button onclick="addItem()">Salvar</button>
+        <a href="estoque.html"><button>Voltar</button></a>
+    </div>
+    <div id="loading"></div>
+    <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" href="stoque.css">
+</head>
+<body>
+
+    <div id="dashboard" class="container hidden">
+        <h2>Estoque</h2>
+        <button onclick="logout()">Logout</button>
+        <a href="adicionar.html"><button>Adicionar Novo Item</button></a>
+        <table id="itemsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Categoria</th>
+                    <th>Nome</th>
+                    <th>Munição</th>
+                    <th>Quantidade Atual</th>
+                    <th>Quantidade Mínima</th>
+                    <th>Quantidade Máxima</th>
+                    <th>Data Atualização</th>
+                    <th>Observações</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os itens serão carregados aqui via JS -->
+            </tbody>
+        </table>
+    </div>
+    <div id="loading" class="loading hidden">Aguardando a resposta da API...</div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
