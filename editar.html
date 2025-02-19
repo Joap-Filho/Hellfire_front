@@ -19,12 +19,15 @@
         <input type="number" id="quantidade_maxima"><br>
         <input type="text" id="data_atualizacao" disabled><br>
         <textarea id="observacoes"></textarea><br>
-        <button onclick="saveEdit()">Salvar</button>
-        <a href="estoque.html"><button>Voltar</button></a>
+
+        <!-- Botões lado a lado -->
+        <div class="button-container">
+            <button class="save" onclick="saveEdit()">Salvar</button>
+            <a href="estoque.html"><button class="voltar">Voltar</button></a>
+        </div>
     </div>
+
     <div id="loading" class="loading hidden">Aguardando a resposta da API...</div>
     <script src="script.js"></script>
 </body>
 </html>
-
-

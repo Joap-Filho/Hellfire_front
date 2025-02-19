@@ -1,14 +1,61 @@
-let authHeader = '';
-
 function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    
+    // Verifica se o campo de usuário e senha estão vazios
+    if (!username || !password) {
+        Swal.fire('Erro', 'Por favor, insira usuário e senha.', 'error');
+        return;
+    }
+
     authHeader = 'Basic ' + btoa(username + ':' + password);
     localStorage.setItem('auth', authHeader);
-    Swal.fire('Login bem-sucedido!', 'Você foi redirecionado para o estoque.', 'success').then(() => {
-        window.location.href = 'estoque.html';
+
+    // Exibe a mensagem de "Aguardando a resposta da API"
+    showLoading(true, "Aguardando a resposta da API...");
+
+    // Endpoint correto para a API de estoque
+    fetch('https://hellfire-ys4u.onrender.com/api/estoque/', {
+        method: 'GET',  // Supondo que o método GET é utilizado para consultar o estoque
+        headers: {
+            'Authorization': authHeader,  // Usando o header de autenticação
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(errorHtml => {
+                // Se a resposta não for JSON, mostramos o erro HTML no console
+                console.error('Erro recebido:', errorHtml);
+                Swal.fire('Erro', 'Usuário ou senha incorretos. Tente novamente.', 'error');
+                throw new Error('Usuário ou senha incorretos');
+            });
+        }
+        // Tenta parsear como JSON se a resposta for válida
+        return response.json();
+    })
+    .then(data => {
+        // Esconde a mensagem de carregamento antes de exibir o SweetAlert de sucesso
+        showLoading(false);
+
+        // Sucesso no login
+        Swal.fire('Login bem-sucedido!', 'Você foi redirecionado para o estoque.', 'success').then(() => {
+            window.location.href = 'estoque.html';
+        });
+    })
+    .catch(error => {
+        // Esconde a mensagem de carregamento em caso de erro
+        showLoading(false);
+
+        // Caso algum outro erro ocorra
+        console.error(error);
+        Swal.fire('Erro ao autenticar', error.message, 'error');
     });
 }
+
+
+
+
 
 function logout() {
     localStorage.removeItem('auth');

@@ -34,8 +34,8 @@ input, textarea {
 }
 
 button {
-    width: 100%;
-    padding: 10px;
+    width: auto; /* Ajusta a largura para se adaptar ao conteúdo */
+    padding: 8px 16px; /* Diminui o tamanho do botão */
     background-color: #6200ea;
     border: none;
     border-radius: 5px;
@@ -49,6 +49,17 @@ button:hover {
     background-color: #3700b3;
 }
 
+a button {
+    background-color: #ff5722;
+    width: auto;
+    padding: 8px 16px; /* Diminui o tamanho do botão */
+    margin-top: 10px;
+}
+
+a button:hover {
+    background-color: #f44336;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .container {
@@ -59,6 +70,7 @@ button:hover {
         width: 100%;
     }
 }
+
 #loading {
     position: fixed;
     top: 0;
@@ -74,4 +86,3 @@ button:hover {
     font-weight: bold;
     z-index: 9999;
 }
-

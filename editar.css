@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin: 0;
 }
 
 .container {
@@ -16,11 +17,17 @@ body {
     background-color: #1f1f1f;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinhamento à esquerda */
 }
 
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
+    color: #fff;
 }
 
 input, textarea {
@@ -33,20 +40,37 @@ input, textarea {
     border-radius: 5px;
 }
 
+/* Ajuste para os botões */
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #03dac5;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
+    width: auto;
+    padding: 8px 16px; /* Botões menores */
+    font-size: 14px; /* Reduzido para um tamanho mais compacto */
     cursor: pointer;
-    margin-bottom: 10px; /* Espaçamento entre os botões */
+    border-radius: 5px;
+    margin-right: 10px; /* Espaçamento entre os botões */
+    display: inline-block; /* Faz os botões ficarem lado a lado */
 }
 
 button:hover {
+    opacity: 0.8;
+}
+
+button.save {
+    background-color: #03dac5; /* Cor verde para "Salvar" */
+    color: white;
+}
+
+button.save:hover {
     background-color: #00a896;
+}
+
+button.voltar {
+    background-color: #ff5722; /* Cor vermelha para "Voltar" */
+    color: white;
+}
+
+button.voltar:hover {
+    background-color: #f44336;
 }
 
 /* Responsividade */
@@ -59,6 +83,7 @@ button:hover {
         width: 100%;
     }
 }
+
 #loading {
     position: fixed;
     top: 0;
@@ -74,5 +99,3 @@ button:hover {
     font-weight: bold;
     z-index: 9999;
 }
-
-

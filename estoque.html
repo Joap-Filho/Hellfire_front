@@ -10,8 +10,8 @@
 <body>
 
     <div id="dashboard" class="container hidden">
-        <h2>Estoque</h2>
-        <button onclick="logout()">Logout</button>
+        <h2>Estoque Atual</h2>
+        <button class="logout" onclick="logout()">Logout</button>
         <a href="adicionar.html"><button>Adicionar Novo Item</button></a>
         <table id="itemsTable">
             <thead>
@@ -33,11 +33,10 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Loading message -->
     <div id="loading" class="loading hidden">Aguardando a resposta da API...</div>
+
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-

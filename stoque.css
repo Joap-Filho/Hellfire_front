@@ -8,6 +8,7 @@ body {
     align-items: center;
     min-height: 100vh;
     flex-direction: column;
+    margin: 0;
 }
 
 .container {
@@ -16,13 +17,15 @@ body {
     padding: 20px;
     background-color: #1f1f1f;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
 }
 
 h2 {
     margin-bottom: 20px;
     font-size: 28px;
     text-align: center;
+    font-weight: 600;
+    color: #fff;
 }
 
 button {
@@ -34,6 +37,7 @@ button {
     margin: 10px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
@@ -75,6 +79,7 @@ td {
 
 button:hover, .edit-btn:hover, .delete-btn:hover {
     opacity: 0.8;
+    transition: opacity 0.3s;
 }
 
 /* Responsividade */
@@ -93,6 +98,7 @@ button:hover, .edit-btn:hover, .delete-btn:hover {
         padding: 12px;
     }
 }
+
 #loading {
     position: fixed;
     top: 0;
@@ -109,4 +115,22 @@ button:hover, .edit-btn:hover, .delete-btn:hover {
     z-index: 9999;
 }
 
+/* Adicionando um pouco de estilo para os botões dentro da tabela */
+button.edit-btn, button.delete-btn {
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 14px;
+    margin: 5px 0;
+}
 
+/* Ajustando o botão de logout */
+button.logout {
+    background-color: #ff5722;
+    width: auto;  /* Ajusta a largura para se adaptar ao conteúdo */
+    padding: 8px 16px;  /* Diminui o tamanho do botão */
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 16px;  /* Ajuste no tamanho da fonte */
+    display: inline-block;  /* Para garantir que o botão ocupe apenas o espaço necessário */
+    cursor: pointer;
+}
