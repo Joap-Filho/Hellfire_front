@@ -5,7 +5,9 @@ function login() {
     const password = document.getElementById('password').value;
     authHeader = 'Basic ' + btoa(username + ':' + password);
     localStorage.setItem('auth', authHeader);
-    window.location.href = 'estoque.html';
+    Swal.fire('Login bem-sucedido!', 'Você foi redirecionado para o estoque.', 'success').then(() => {
+        window.location.href = 'estoque.html';
+    });
 }
 
 function logout() {
@@ -93,7 +95,7 @@ function loadItems() {
 
         showLoading(false); // Esconde a "Aguardando a resposta da API..." após carregar
     })
-    .catch(error => alert("Erro ao carregar estoque: " + error.message));
+    .catch(error => Swal.fire('Erro ao carregar estoque', error.message, 'error'));
 }
 
 
@@ -103,8 +105,9 @@ function loadEditForm() {
     const id = urlParams.get('id');
     
     if (!id) {
-        alert('Erro: ID do item não encontrado.');
-        window.location.href = 'estoque.html';
+        Swal.fire('Erro', 'ID do item não encontrado.', 'error').then(() => {
+            window.location.href = 'estoque.html';
+        });
         return;
     }
 
@@ -125,7 +128,7 @@ function loadEditForm() {
         document.getElementById('data_atualizacao').value = new Date(item.data_atualizacao).toLocaleString();
         document.getElementById('observacoes').value = item.observacoes || '';
     })
-    .catch(error => alert("Erro ao carregar item para edição: " + error.message))
+    .catch(error => Swal.fire('Erro ao carregar item para edição', error.message, 'error'))
     .finally(() => showLoading(false));
 }
 
@@ -152,10 +155,11 @@ function saveEdit() {
         body: JSON.stringify(updatedItem)
     })
     .then(() => {
-        alert('Item atualizado com sucesso!');
-        window.location.href = 'estoque.html';
+        Swal.fire('Item atualizado com sucesso!', '', 'success').then(() => {
+            window.location.href = 'estoque.html';
+        });
     })
-    .catch(error => alert("Erro ao atualizar item: " + error.message))
+    .catch(error => Swal.fire('Erro ao atualizar item', error.message, 'error'))
     .finally(() => showLoading(false));
 }
 
@@ -165,11 +169,11 @@ function addItem() {
     const newItem = {
         categoria: document.getElementById('categoria').value,
         nome_item: document.getElementById('nome_item').value,
-        municao: document.getElementById('municao').value || null,
+        municao: document.getElementById('municao').value || null,  // Torna municao opcional
         quantidade_atual: document.getElementById('quantidade_atual').value,
         quantidade_minima: document.getElementById('quantidade_minima').value,
         quantidade_maxima: document.getElementById('quantidade_maxima').value,
-        observacoes: document.getElementById('observacoes').value || null
+        observacoes: document.getElementById('observacoes').value || null  // Torna observacoes opcional
     };
 
     fetch('https://hellfire-ys4u.onrender.com/api/estoque/', {
@@ -180,39 +184,61 @@ function addItem() {
         },
         body: JSON.stringify(newItem)
     })
-    .then(() => {
-        alert('Item adicionado com sucesso!');
-        window.location.href = 'estoque.html';
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                // Se o servidor retorna um erro, mostramos as categorias ou campos ausentes
+                if (errorData.errors && errorData.errors.categoria) {
+                    Swal.fire('Campos ausentes', `Categoria ausente: ${errorData.errors.categoria.join(', ')}`, 'error');
+                } else {
+                    Swal.fire('Erro ao adicionar item', 'Algum erro ocorreu ao adicionar o item. Tente novamente.', 'error');
+                }
+                throw new Error('Erro ao adicionar item');
+            });
+        }
+        return response.json();
     })
-    .catch(error => alert("Erro ao adicionar item: " + error.message))
+    .then(() => {
+        Swal.fire('Item adicionado com sucesso!', '', 'success').then(() => {
+            window.location.href = 'estoque.html';
+        });
+    })
+    .catch(error => {
+        // Caso o erro não seja relacionado ao servidor (erro de rede, por exemplo)
+        console.error(error);
+        Swal.fire('Erro ao adicionar item', error.message, 'error');
+    })
     .finally(() => showLoading(false));
 }
 
+
 function deleteItem(id) {
-    if (!confirm("Tem certeza que deseja excluir este item?")) return;
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, excluir!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            showLoading(true, "Excluindo...");
 
-    showLoading(true, "Excluindo...");  // Exibe a tela de carregamento com "Excluindo..."
-
-    fetch(`https://hellfire-ys4u.onrender.com/api/estoque/${id}/`, {
-        method: 'DELETE',
-        headers: { 'Authorization': authHeader }
-    })
-    .then(() => {
-        // Remove a linha da tabela após a exclusão
-        const row = document.querySelector(`#item-${id}`);
-        if (row) {
-            row.remove();  // Remove a linha da tabela
+            fetch(`https://hellfire-ys4u.onrender.com/api/estoque/${id}/`, {
+                method: 'DELETE',
+                headers: { 'Authorization': authHeader }
+            })
+            .then(() => {
+                const row = document.querySelector(`#item-${id}`);
+                if (row) {
+                    row.remove();
+                }
+                showLoading(false);
+            })
+            .catch(error => {
+                showLoading(false);
+                Swal.fire('Erro ao excluir item', error.message, 'error');
+            });
         }
-        showLoading(false);  // Esconde a mensagem de carregamento após a exclusão 
-    })
-    .catch(error => {
-        showLoading(false);  // Esconde a mensagem de carregamento em caso de erro
-        alert("Erro ao excluir item: " + error.message);
     });
 }
-
-
-
-
-
-
