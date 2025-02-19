@@ -170,3 +170,34 @@ footer .developer-names span {
 #deashboard {
     margin-bottom: 50px;
 }
+
+/* Ajustes para as células que contêm as observações */
+table td {
+    word-wrap: break-word;  /* Quebra o texto automaticamente quando necessário */
+    white-space: normal;    /* Permite que o texto quebre a linha */
+    overflow: hidden;       /* Impede que o texto ultrapasse a célula */
+    text-overflow: ellipsis; /* Adiciona "..." quando o texto ultrapassa a largura */
+    max-width: 200px; /* Limita a largura das células das observações */
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    box-sizing: border-box; /* Garante que o padding não quebre o layout */
+}
+
+/* Estilo adicional para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaços entre as células */
+}
+
+th, td {
+    border: 1px solid #555;
+    text-align: left;
+    padding: 10px;
+}
+
+th {
+    background-color: #222;
+}
+
