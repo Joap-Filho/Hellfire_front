@@ -3,7 +3,8 @@ html, body {
     height: 100%; /* Garante que a página ocupe 100% da altura da tela */
     margin: 0;    /* Remove margens padrão */
     display: flex;
-    flex-direction: column; /* Organiza os elementos de cima para baixo */
+    flex-direction: column;
+    overflow-x: hidden; /* Organiza os elementos de cima para baixo */
 }
 
 body {
