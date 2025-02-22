@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/estoque/(.*)",
+        "destination": "http://5.189.189.196/api/estoque/$1"
+      }
+    ]
+  }
