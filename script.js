@@ -10,7 +10,7 @@ function login() {
     const authHeader = 'Basic ' + btoa(username + ':' + password);
     localStorage.setItem('auth', authHeader);
 
-    fetch('http://5.189.189.196/api/estoque/', {
+    fetch('https://hellfire-coral.vercel.app/api/estoque/', {
         method: 'GET',
         headers: {
             'Authorization': authHeader,
@@ -86,7 +86,7 @@ function loadItems() {
         return;
     }
 
-    fetch('http://5.189.189.196/api/estoque/', {
+    fetch('https://hellfire-coral.vercel.app/api/estoque/', {
         headers: { 'Authorization': authHeader }
     })
     .then(response => {
@@ -159,7 +159,7 @@ function loadEditForm() {
 
     showLoading(true, "Aguardando a resposta da API...");
 
-    fetch(`http://5.189.189.196/api/estoque/${id}/`, {
+    fetch(`https://hellfire-coral.vercel.app/api/estoque/${id}/`, {
         headers: { 'Authorization': authHeader }
     })
     .then(response => response.json())
@@ -192,7 +192,7 @@ function saveEdit() {
         observacoes: document.getElementById('observacoes').value || null
     };
 
-    fetch(`http://5.189.189.196/api/estoque/${id}/`, {
+    fetch(`https://hellfire-coral.vercel.app/api/estoque/${id}/`, {
         method: 'PUT',
         headers: {
             'Authorization': authHeader,
@@ -222,7 +222,7 @@ function addItem() {
         observacoes: document.getElementById('observacoes').value || null  // Torna observacoes opcional
     };
 
-    fetch('http://5.189.189.196/api/estoque/', {
+    fetch('https://hellfire-coral.vercel.app/api/estoque/', {
         method: 'POST',
         headers: {
             'Authorization': authHeader,
@@ -270,7 +270,7 @@ function deleteItem(id) {
         if (result.isConfirmed) {
             showLoading(true, "Excluindo...");
 
-            fetch(`http://5.189.189.196/api/estoque/${id}/`, {
+            fetch(`https://hellfire-coral.vercel.app/api/estoque/${id}/`, {
                 method: 'DELETE',
                 headers: { 'Authorization': authHeader }
             })
