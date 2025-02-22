@@ -1,58 +1,37 @@
 function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    
-    // Verifica se o campo de usuário e senha estão vazios
+
     if (!username || !password) {
         Swal.fire('Erro', 'Por favor, insira usuário e senha.', 'error');
         return;
     }
 
-    authHeader = 'Basic ' + btoa(username + ':' + password);
+    const authHeader = 'Basic ' + btoa(username + ':' + password);
     localStorage.setItem('auth', authHeader);
 
-    // Exibe a mensagem de "Aguardando a resposta da API"
-    showLoading(true, "Aguardando a resposta da API...");
-
-    // Endpoint correto para a API de estoque
-    fetch('https://hellfire-ys4u.onrender.com/api/estoque/', {
-        method: 'GET',  // Supondo que o método GET é utilizado para consultar o estoque
+    fetch('http://5.189.189.196/api/estoque/', {
+        method: 'GET',
         headers: {
-            'Authorization': authHeader,  // Usando o header de autenticação
+            'Authorization': authHeader,
             'Content-Type': 'application/json'
         }
     })
     .then(response => {
-        if (!response.ok) {
-            return response.text().then(errorHtml => {
-                // Se a resposta não for JSON, mostramos o erro HTML no console
-                console.error('Erro recebido:', errorHtml);
-                Swal.fire('Erro', 'Usuário ou senha incorretos. Tente novamente.', 'error');
-                throw new Error('Usuário ou senha incorretos');
-            });
+        if (response.status === 401) {
+            throw new Error('Usuário ou senha incorretos');
         }
-        // Tenta parsear como JSON se a resposta for válida
         return response.json();
     })
     .then(data => {
-        // Esconde a mensagem de carregamento antes de exibir o SweetAlert de sucesso
-        showLoading(false);
-
-        // Sucesso no login
-        Swal.fire('Login bem-sucedido!', 'Você foi redirecionado para o estoque.', 'success').then(() => {
-            window.location.href = 'estoque.html';
-        });
+        Swal.fire('Login bem-sucedido!', 'Redirecionando...', 'success')
+        .then(() => window.location.href = 'estoque.html');
     })
     .catch(error => {
-        // Esconde a mensagem de carregamento em caso de erro
-        showLoading(false);
-
-        // Caso algum outro erro ocorra
-        console.error(error);
         Swal.fire('Erro ao autenticar', error.message, 'error');
+        console.error(error);
     });
 }
-
 
 
 
@@ -101,20 +80,38 @@ function showLoading(show, message = "Aguardando a resposta da API...") {
 
 
 function loadItems() {
-    if (document.getElementById('loading').style.display !== "flex") {
-        showLoading(true, "Aguardando a resposta da API...");
+    const authHeader = localStorage.getItem('auth');
+    if (!authHeader) {
+        window.location.href = 'login.html';
+        return;
     }
 
-    fetch('https://hellfire-ys4u.onrender.com/api/estoque/', {
+    fetch('http://5.189.189.196/api/estoque/', {
         headers: { 'Authorization': authHeader }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao carregar itens. Código: ' + response.status);
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log("Itens recebidos:", data); // Depuração para ver os dados
+
         const tbody = document.querySelector('#itemsTable tbody');
+        console.log("tbody encontrado:", tbody); // Verifica se o tbody está correto
         tbody.innerHTML = ''; // Limpa a tabela antes de inserir os itens
+
+        if (data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10">Nenhum item encontrado.</td></tr>';
+            return;
+        }
+
         data.forEach(item => {
+            console.log("Adicionando item à tabela:", item); // Depuração para ver cada item
+
             const row = document.createElement("tr");
-            row.id = `item-${item.id}`;  // Atribui um ID único à linha
+            row.id = `item-${item.id}`;
             row.innerHTML = `
                 <td>${item.id}</td>
                 <td>${item.categoria}</td>
@@ -139,11 +136,13 @@ function loadItems() {
                 deleteItem(id);
             });
         });
-
-        showLoading(false); // Esconde a "Aguardando a resposta da API..." após carregar
     })
-    .catch(error => Swal.fire('Erro ao carregar estoque', error.message, 'error'));
+    .catch(error => {
+        console.error("Erro ao carregar estoque:", error);
+        Swal.fire('Erro', error.message, 'error');
+    });
 }
+
 
 
 
@@ -160,7 +159,7 @@ function loadEditForm() {
 
     showLoading(true, "Aguardando a resposta da API...");
 
-    fetch(`https://hellfire-ys4u.onrender.com/api/estoque/${id}/`, {
+    fetch(`http://5.189.189.196/api/estoque/${id}/`, {
         headers: { 'Authorization': authHeader }
     })
     .then(response => response.json())
@@ -193,7 +192,7 @@ function saveEdit() {
         observacoes: document.getElementById('observacoes').value || null
     };
 
-    fetch(`https://hellfire-ys4u.onrender.com/api/estoque/${id}/`, {
+    fetch(`http://5.189.189.196/api/estoque/${id}/`, {
         method: 'PUT',
         headers: {
             'Authorization': authHeader,
@@ -223,7 +222,7 @@ function addItem() {
         observacoes: document.getElementById('observacoes').value || null  // Torna observacoes opcional
     };
 
-    fetch('https://hellfire-ys4u.onrender.com/api/estoque/', {
+    fetch('http://5.189.189.196/api/estoque/', {
         method: 'POST',
         headers: {
             'Authorization': authHeader,
@@ -271,7 +270,7 @@ function deleteItem(id) {
         if (result.isConfirmed) {
             showLoading(true, "Excluindo...");
 
-            fetch(`https://hellfire-ys4u.onrender.com/api/estoque/${id}/`, {
+            fetch(`http://5.189.189.196/api/estoque/${id}/`, {
                 method: 'DELETE',
                 headers: { 'Authorization': authHeader }
             })
